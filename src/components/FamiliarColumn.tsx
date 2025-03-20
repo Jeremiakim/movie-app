@@ -1,5 +1,5 @@
 // FamiliarColumn.tsx
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Skeleton } from "./ui/Skeletons";
@@ -82,8 +82,8 @@ export const FamiliarColumn = () => {
         className="flex space-x-4 overflow-x-auto scrollbar-hide pb-6"
       >
         {similarMovies.map((movie) => (
-          <a
-            href={`/moviedetail/${movie.id}`}
+          <Link
+            to={`/moviedetail/${movie.id}`}
             key={movie.id}
             className="group flex-shrink-0 w-48 transform hover:scale-105 transition-transform duration-300"
           >
@@ -111,7 +111,7 @@ export const FamiliarColumn = () => {
                 </div>
               </div>
             </div>
-          </a>
+          </Link>
         ))}
       </div>
     </div>
