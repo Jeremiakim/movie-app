@@ -66,7 +66,11 @@ export const FamiliarColumn = () => {
     );
 
   if (!similarMovies.length)
-    return <div className="text-gray-500 py-4">No similar movies found</div>;
+    return (
+      <div className="text-center py-8 bg-gray-50 dark:text-white rounded-xl">
+        <p className="text-red-500">Film Not Found</p>
+      </div>
+    );
 
   return (
     <div className="relative">
