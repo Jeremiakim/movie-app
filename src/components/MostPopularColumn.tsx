@@ -1,13 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 
 export const MostWatchedMovies = () => {
-  const navigate = useNavigate();
-
   // Fetch trending movies
   const fetchPopularMovies = async () => {
     const response = await axios.get(
@@ -37,10 +34,10 @@ export const MostWatchedMovies = () => {
         <div className="overflow-x-auto whitespace-nowrap scrollbar-hide p-4">
           <div className="inline-flex space-x-3">
             {data.map((movie: any) => (
-              <div
+              <a
+                href={`/moviedetail/${movie.id}`}
                 key={movie.id}
                 className="bg-gray-800 dark:bg-slate-100 rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 w-48 flex-shrink-0 cursor-pointer"
-                onClick={() => navigate(`/moviedetail/${movie.id}`)}
               >
                 <img
                   src={
@@ -66,7 +63,7 @@ export const MostWatchedMovies = () => {
                     {new Date(movie.release_date).toLocaleDateString()}
                   </p>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </div>
