@@ -1,42 +1,47 @@
-const CACHE_NAME = "v3"; // Naikkan versi cache untuk update
-const OFFLINE_URL = "/offline.html"; // Halaman fallback offline
+const CACHE_NAME = "v4"; // Update versi cache
+const OFFLINE_URL = "/offline.html";
 
+// Daftar aset yang dicache agar offline.html bisa ditampilkan dengan benar
+const ASSETS_TO_CACHE = [
+  OFFLINE_URL,
+  "/styles/main.css", // Tambahkan CSS untuk offline page
+  "/script/main.js", // Tambahkan JS jika diperlukan
+  "/images/logo.png", // Tambahkan logo atau gambar lain yang dipakai
+];
+
+// Install event - Cache offline.html dan aset pendukung
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log("[Service Worker] Caching offline page...");
-      return cache.addAll([OFFLINE_URL]);
+      console.log("[Service Worker] Caching offline page & assets...");
+      return cache.addAll(ASSETS_TO_CACHE);
     })
   );
-  self.skipWaiting();
+  self.skipWaiting(); // Langsung aktifkan SW baru
 });
 
-// Fetch event - Handle Offline Fallback
+// Fetch event - Menampilkan offline.html saat user offline
 self.addEventListener("fetch", (event) => {
   if (event.request.mode === "navigate") {
-    // Jika request adalah halaman navigasi (misal detail film)
+    // Handle navigasi halaman (misal detail film)
     event.respondWith(
       fetch(event.request)
         .then((response) => {
           return caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, response.clone()); // Simpan halaman ke cache
+            cache.put(event.request, response.clone()); // Simpan ke cache
             return response;
           });
         })
         .catch(() => {
           console.log("[Service Worker] Offline! Menampilkan offline.html.");
-          return caches.match(OFFLINE_URL);
+          return caches.match(new Request(OFFLINE_URL, { cache: "reload" }));
         })
     );
     return;
   }
 
-  // Cache-first untuk aset statis
-  if (
-    event.request.destination === "script" ||
-    event.request.destination === "style" ||
-    event.request.destination === "image"
-  ) {
+  // Cache-first untuk aset statis (CSS, JS, Gambar)
+  if (["script", "style", "image"].includes(event.request.destination)) {
     event.respondWith(
       caches.match(event.request).then((cachedResponse) => {
         return (
@@ -49,7 +54,7 @@ self.addEventListener("fetch", (event) => {
               });
             })
             .catch(() => {
-              console.log("[Service Worker] Gagal fetch asset, gunakan cache.");
+              console.log("[Service Worker] Fetch asset gagal, gunakan cache.");
               return caches.match(event.request);
             })
         );
@@ -72,7 +77,7 @@ self.addEventListener("fetch", (event) => {
   }
 });
 
-// Hapus cache lama saat aktivasi
+// Activate event - Menghapus cache lama saat ada update SW
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
