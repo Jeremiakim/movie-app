@@ -6,17 +6,6 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
-    setupFiles: "./tests/setup/test-utils.tsx",
-    include: ["tests/**/*.{test,spec}.{ts,tsx}"],
-    coverage: {
-      provider: "istanbul",
-      reportsDirectory: "./tests/coverage",
-    },
-  },
-  resolve: {
-    alias: {
-      "@": "/src",
-      "@tests": "/tests",
-    },
+    setupFiles: "./src/setupTests.js",
   },
 });
