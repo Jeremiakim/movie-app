@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Skeleton } from "./ui/Skeletons";
 import { HeartIcon as HeartSolidIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;

@@ -12,6 +12,14 @@ Aplikasi pencarian film menggunakan **React**, **TypeScript**, dan **MovieDB API
 
 ---
 
+## Testing
+
+```sh
+npm test
+```
+
+---
+
 ## 📥 Instalasi & Menjalankan Proyek
 
 ### 1️⃣ Clone Repository
