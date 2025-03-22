@@ -7,15 +7,9 @@ const BASE_URL = "https://api.themoviedb.org/3";
 export const FTWMovies = () => {
   // Fetch trending movies
   const fetchFreeMovies = async () => {
-    const response = await axios.get(
-      `${BASE_URL}/discover/movie
-`,
-      {
-        params: {
-          api_key: API_KEY,
-        },
-      }
-    );
+    const response = await axios.get(`${BASE_URL}/discover/movie`, {
+      params: { api_key: API_KEY },
+    });
     return response.data.results;
   };
 
@@ -59,7 +53,7 @@ export const FTWMovies = () => {
                       {movie.vote_average.toFixed(1)}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-400 dark:text-black *:mt-2">
+                  <p className="text-sm text-gray-400 dark:text-black mt-2">
                     {new Date(movie.release_date).toLocaleDateString()}
                   </p>
                 </div>
