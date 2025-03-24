@@ -83,7 +83,7 @@ describe("RecommendationColumn", () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText("Your Connection Is Lost")).toBeInTheDocument();
+    expect(screen.getByText("Film Not Found")).toBeInTheDocument();
   });
 
   it("renders empty state when no recommendations available", () => {

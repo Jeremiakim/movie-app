@@ -57,7 +57,7 @@ export const RecommendationColumn = () => {
       {/* Error State */}
       {recError && (
         <div className="text-center py-8 bg-gray-50 dark:text-white rounded-xl">
-          <p className="text-red-500">Your Connection Is Lost</p>
+          <p className="text-red-500">Film Not Found</p>
         </div>
       )}
 

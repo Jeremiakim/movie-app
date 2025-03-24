@@ -19,6 +19,7 @@ export const FamiliarColumn = () => {
   const [isScrolledLeft, setIsScrolledLeft] = useState(true);
   const [isScrolledRight, setIsScrolledRight] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
   const BASE_URL = "https://api.themoviedb.org/3";
@@ -30,8 +31,11 @@ export const FamiliarColumn = () => {
           `${BASE_URL}/movie/${movieId}/similar?api_key=${API_KEY}`
         );
         setSimilarMovies(data.results);
+        setErrorMessage(null);
+        console.log(data);
+        console.log(errorMessage);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        setErrorMessage("Film Not Found");
       } finally {
         setIsLoading(false);
       }
@@ -62,6 +66,13 @@ export const FamiliarColumn = () => {
         {[...Array(5)].map((_, i) => (
           <Skeleton key={i} className="h-64 w-48 rounded-xl" />
         ))}
+      </div>
+    );
+
+  if (errorMessage)
+    return (
+      <div className="text-center py-8 bg-gray-50 dark:text-white rounded-xl">
+        <p className="text-red-500">{errorMessage}</p>
       </div>
     );
 

@@ -100,9 +100,7 @@ const MovieDetail = () => {
     return (
       <div className="flex flex-col items-center justify-center">
         <div className="bg-white p-6 rounded-lg shadow-md text-center">
-          <p className="text-red-500 text-lg font-bold">
-            Film tidak ditemukan!
-          </p>
+          <p className="text-red-500 text-lg font-bold">Film Not Found!!!</p>
           <button
             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
             onClick={() => navigate("/")}
